@@ -6,6 +6,8 @@
 
 int main(void)
 {
+	struct tm *s_time;
+	time_t the_time;
 	int ret;
 
 	ret = setup_io();
@@ -18,10 +20,16 @@ int main(void)
 	init_switch();
 	init_led();
 
-	LCD_Write_1st("Hello,");
-	LCD_Write_2nd("World!");
+	time(&the_time);
+	s_time = (struct tm *)localtime(&the_time);
+
+	LCD_Write_auto(asctime(s_time));
+	printf("%s\n", asctime(s_time));
 
 	while(1) {
+		time(&the_time);
+		s_time = (struct tm*)localtime(&the_time);
+		LCD_Write_auto(asctime(s_time));
 		if (get_switch()) {
 			LED_On();
 		} else {
