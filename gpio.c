@@ -54,6 +54,7 @@ void init_lcd(void);
 static void set_ctl(unsigned char value);
 static void write_char(char value);
 void write_str(char line, char *str);
+void write_str_auto(char *str);
 static void setup_lcd_4bit(void);
 static void setup_lcd_8bit(void);
 int setup_io(void);
@@ -187,6 +188,33 @@ void write_str(char line, char *str)
 	usleep(50);
 
 	for (i=0; i<16; i++) {
+		if (*str != '\0') {
+			write_char(*str);
+			str++;
+		} else {
+			write_char(' ');
+		}
+	}
+}
+
+void write_str_auto(char *str)
+{
+	int i;
+
+	set_ctl(DR_POS_1ST);
+	usleep(50);
+	for (i=0; i<16; i++) {
+		if (*str != '\0') {
+			write_char(*str);
+			str++;
+		} else {
+			write_char(' ');
+		}
+	}
+
+	set_ctl(DR_POS_2ND);
+	usleep(50);
+	for (; i<32; i++) {
 		if (*str != '\0') {
 			write_char(*str);
 			str++;

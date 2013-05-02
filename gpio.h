@@ -12,3 +12,4 @@ int  setup_io(void);
 #define LED_Off()					led_ctl(0);
 #define LCD_Write_1st(_str_)		write_str(1, _str_);
 #define LCD_Write_2nd(_str_)		write_str(2, _str_);
+#define LCD_Write_auto(_str_)		write_str_auto(_str_);
